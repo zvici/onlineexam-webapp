@@ -8,7 +8,7 @@
         <div class="dropdown">
           <div class="dropbtn">
             <b-avatar src="https://placekitten.com/300/300"></b-avatar>
-            <label>{{ userFullName }}</label>
+            <label>{{ userData.lastName + " " + userData.firstName }} </label>
             <b-icon icon="caret-down-fill"></b-icon>
           </div>
           <div class="dropdown-content">
@@ -38,9 +38,16 @@
 import ChangePassword from "./ChangePassword.vue";
 export default {
   components: { ChangePassword },
+  props: {
+    userData: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
-      userFullName: "",
       visible: false,
     };
   },

@@ -4,6 +4,7 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import "./assets/css/global.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 // Make BootstrapVue available throughout your project

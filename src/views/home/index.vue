@@ -7,9 +7,7 @@
         header="Thông tin người dùng"
         class="shadow-sm"
       >
-        <b-card-text
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text
-        >
+        <b-card-text>{{ userData }}</b-card-text>
       </b-card>
     </b-row>
   </div>
@@ -19,6 +17,11 @@ import LayoutDefault from "@/components/Layouts/LayoutDefault.vue";
 export default {
   created() {
     this.$emit("update:layout", LayoutDefault);
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.userData;
+    },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="layout-default">
-    <the-navbar />
+    <the-navbar :userData="userData" />
     <b-container class="main">
       <the-sidebar />
       <div class="the-content">
@@ -19,6 +19,11 @@ export default {
     TheNavbar,
     TheSidebar,
     TheFooter,
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.userData;
+    },
   },
 };
 </script>

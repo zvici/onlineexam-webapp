@@ -1,7 +1,7 @@
 export default {
   state: {
     isAuthenticated: localStorage.getItem("isAuthenticated") ? true : false,
-    userData: localStorage.getItem("userData")
+    userData: JSON.parse(localStorage.getItem("userData"))
       ? localStorage.getItem("userData")
       : null,
     token: localStorage.getItem("token") ? localStorage.getItem("token") : null,

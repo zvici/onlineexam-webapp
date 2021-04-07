@@ -29,10 +29,26 @@ const routes = [
       isRedirectIfLoggedIn: true,
     },
   },
+
   {
     path: "/login",
     name: "Login",
     component: () => import("../views/login/index.vue"),
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: () => import("../views/signup/index.vue"),
+  },
+  {
+    path: "/password-retrieval/:code",
+    name: "PasswordRetrieval",
+    component: () => import("../views/passwordretrieval/index.vue"),
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: () => import("../views/forgotpassword/index.vue"),
   },
   {
     path: "*",

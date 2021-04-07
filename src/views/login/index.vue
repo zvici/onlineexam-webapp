@@ -49,6 +49,11 @@
               {{ stateValidate.errorPassword }}
             </b-form-invalid-feedback>
           </b-form-group>
+          <div class="password-retrieval">
+            <router-link :to="{ name: 'ForgotPassword' }"
+              >Quên mật khẩu</router-link
+            >
+          </div>
           <b-overlay
             :show="busy"
             opacity="0.6"
@@ -58,6 +63,10 @@
             <b-button type="submit" variant="primary">Đăng nhập</b-button>
           </b-overlay>
         </b-form>
+        <div class="signup">
+          <label for="">Chưa đăng ký? </label>
+          <router-link :to="{ name: 'Signup' }"> Tạo một tài khoản</router-link>
+        </div>
       </div>
     </section>
     <section>
@@ -779,6 +788,15 @@ export default {
     height: inherit;
     .form-login {
       width: 400px;
+      .password-retrieval {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 10px;
+        font-weight: bold;
+      }
+    }
+    .signup {
+      padding-top: 20px;
     }
   }
   section:nth-child(2) {
@@ -787,7 +805,7 @@ export default {
     align-items: center;
     width: 50%;
     height: inherit;
-    background-color: rgb(242, 255, 249);
+    background-color: rgb(175, 240, 255);
   }
   .animation {
     animation: move 2000ms infinite alternate ease-in-out;
