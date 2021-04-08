@@ -52,7 +52,7 @@ const routes = [
   },
   {
     path: "*",
-    name: "Not Found",
+    name: "NotFound",
     component: () => import("../views/404/index.vue"),
   },
 ];
