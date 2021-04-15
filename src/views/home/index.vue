@@ -1,20 +1,15 @@
 <template>
   <div class="home-page">
     <b-row class="m-auto">
-      <b-card
-        cols="12"
-        border-variant="light"
-        header="Thông tin người dùng"
-        class="shadow-sm"
-      >
-        <b-card-text>{{ userData }}</b-card-text>
-      </b-card>
+      <info-user :userData="userData" />
     </b-row>
   </div>
 </template>
 <script>
 import LayoutDefault from "@/components/Layouts/LayoutDefault.vue";
+import InfoUser from "./components/InfoUser.vue";
 export default {
+  components: { InfoUser },
   created() {
     this.$emit("update:layout", LayoutDefault);
   },

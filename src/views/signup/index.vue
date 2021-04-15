@@ -143,10 +143,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("../../assets/images/bg/bg.jpg");
   &__formSignup {
-    border-radius: 3px;
     padding: 20px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background: rgba(255, 255, 255, 0.837);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     button {
       width: 100%;
     }

@@ -2,8 +2,8 @@
   <main class="login-page">
     <section>
       <div class="form-login">
-        <div class="text-center">
-          <h2>logohere</h2>
+        <div class="text-center logo">
+          <img src="@/assets/images/logo_exam.png" alt="logo" />
         </div>
         <b-form @submit.prevent="onLogin">
           <b-form-group
@@ -735,8 +735,6 @@ export default {
   created() {
     // Remove layout khi vào trang login
     this.$emit("update:layout", "div");
-    // Remove store token khi vào trang login
-    this.$store.commit("removeAuthentication");
   },
   mounted() {
     // Focus input email khi render xong UI
@@ -787,6 +785,12 @@ export default {
     width: 50%;
     height: inherit;
     .form-login {
+      .logo {
+        padding: 20px;
+        img {
+          width: 60%;
+        }
+      }
       width: 400px;
       .password-retrieval {
         display: flex;
@@ -805,7 +809,7 @@ export default {
     align-items: center;
     width: 50%;
     height: inherit;
-    background-color: rgb(175, 240, 255);
+    background-color: #f2fff9;
   }
   .animation {
     animation: move 2000ms infinite alternate ease-in-out;
