@@ -1,3 +1,4 @@
+import store from '@/store'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -14,6 +15,9 @@ const router = new VueRouter({
       path: '/',
       name: 'home',
       component: () => import('@/views/Home.vue'),
+      meta: {
+        isRedirectIfLoggedIn: true,
+      },
     },
     {
       path: '/second-page',
@@ -27,6 +31,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        isRedirectIfLoggedIn: true,
       },
     },
     {
@@ -35,6 +40,7 @@ const router = new VueRouter({
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
+        isRedirectIfLoggedIn: false,
       },
     },
     {
@@ -61,5 +67,20 @@ router.afterEach(() => {
     appLoading.style.display = 'none'
   }
 })
-
+// Check token khi chuyển route
+router.beforeEach((to, _, next) => {
+  const token = localStorage.getItem('token')
+  if (to.meta.isRedirectIfLoggedIn) {
+    if (!token) {
+      store.commit('removeAuthentication')
+      return next({ name: 'login' })
+    }
+  }
+  if (to.meta.isRedirectIfLoggedIn === false) {
+    if (token) {
+      return next({ name: 'home' })
+    }
+  }
+  return next()
+})
 export default router

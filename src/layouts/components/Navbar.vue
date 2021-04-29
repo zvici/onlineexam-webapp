@@ -29,9 +29,9 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              Lê Thuý An
+              {{ userData ? userData.fullName : '' }}
             </p>
-            <span class="user-status">2001160299</span>
+            <span class="user-status"> {{ userData ? userData.code: '' }}</span>
           </div>
           <b-avatar
             size="40"
@@ -82,8 +82,8 @@
         <b-dropdown-divider />
 
         <b-dropdown-item
-          to="/login"
           link-class="d-flex align-items-center"
+          @click="onLogout"
         >
           <feather-icon
             size="16"
@@ -124,6 +124,17 @@ export default {
     toggleVerticalMenuActive: {
       type: Function,
       default: () => {},
+    },
+  },
+  computed: {
+    userData() {
+      return this.$store.getters.userData
+    },
+  },
+  methods: {
+    onLogout() {
+      this.$store.commit('removeAuthentication')
+      this.$router.push('/login')
     },
   },
 }

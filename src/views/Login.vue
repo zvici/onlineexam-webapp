@@ -1,7 +1,6 @@
 <template>
   <div class="auth-wrapper auth-v2">
     <b-row class="auth-inner m-0">
-
       <!-- Brand logo-->
       <b-link class="brand-logo">
         <vuexy-logo />
@@ -16,7 +15,9 @@
         lg="8"
         class="d-none d-lg-flex align-items-center p-5"
       >
-        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <div
+          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
+        >
           <b-img
             fluid
             :src="imgUrl"
@@ -55,22 +56,23 @@
             >
               <!-- email -->
               <b-form-group
-                label="Email"
+                label="Mã đăng nhập"
                 label-for="login-email"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
+                  name="Mã đăng nhập"
+                  rules="required"
                 >
                   <b-form-input
                     id="login-email"
                     v-model="userEmail"
-                    :state="errors.length > 0 ? false:null"
+                    :state="errors.length > 0 ? false : null"
                     name="login-email"
-                    placeholder="john@example.com"
                   />
-                  <small class="text-danger">{{ errors[0] }}</small>
+                  <small class="text-danger">{{
+                    errors[0] ? "Mã đăng nhập là bắt buộc" : ""
+                  }}</small>
                 </validation-provider>
               </b-form-group>
 
@@ -78,7 +80,7 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="login-password">Mật khẩu</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
+                  <b-link :to="{ name: 'auth-forgot-password-v2' }">
                     <small>Quên mật khẩu?</small>
                   </b-link>
                 </div>
@@ -89,12 +91,12 @@
                 >
                   <b-input-group
                     class="input-group-merge"
-                    :class="errors.length > 0 ? 'is-invalid':null"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
                   >
                     <b-form-input
                       id="login-password"
                       v-model="password"
-                      :state="errors.length > 0 ? false:null"
+                      :state="errors.length > 0 ? false : null"
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
@@ -108,7 +110,9 @@
                       />
                     </b-input-group-append>
                   </b-input-group>
-                  <small class="text-danger">{{ errors[0] }}</small>
+                  <small class="text-danger">{{
+                    errors[0] ? "Mật khẩu là bắt buộc" : ""
+                  }}</small>
                 </validation-provider>
               </b-form-group>
 
@@ -124,20 +128,27 @@
               </b-form-group>
 
               <!-- submit buttons -->
-              <b-button
-                type="submit"
-                variant="primary"
-                block
-                @click="validationForm"
+              <b-overlay
+                :show="busy"
+                rounded
+                opacity="0.6"
+                spinner-small
+                spinner-variant="primary"
               >
-                Đăng nhập
-              </b-button>
-            </b-form>
+                <b-button
+                  type="submit"
+                  variant="primary"
+                  block
+                  @click="validationForm"
+                >
+                  Đăng nhập
+                </b-button>
+              </b-overlay></b-form>
           </validation-observer>
 
           <b-card-text class="text-center mt-2">
             <span>Là người mới? </span>
-            <b-link :to="{name:'page-auth-register-v2'}">
+            <b-link :to="{ name: 'page-auth-register-v2' }">
               <span>&nbsp;Click vào đây để tạo tài khoản</span>
             </b-link>
           </b-card-text>
@@ -178,7 +189,7 @@
           </div>
         </b-col>
       </b-col>
-    <!-- /Login-->
+      <!-- /Login-->
     </b-row>
   </div>
 </template>
@@ -188,9 +199,22 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton,
+  BRow,
+  BCol,
+  BLink,
+  BFormGroup,
+  BFormInput,
+  BInputGroupAppend,
+  BInputGroup,
+  BFormCheckbox,
+  BCardText,
+  BCardTitle,
+  BImg,
+  BForm,
+  BButton,
+  BOverlay,
 } from 'bootstrap-vue'
-import { required, email } from '@validations'
+import { required } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
@@ -213,17 +237,19 @@ export default {
     VuexyLogo,
     ValidationProvider,
     ValidationObserver,
+    BOverlay,
   },
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      busy: false,
       status: '',
       password: '',
       userEmail: '',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       // validation rulesimport store from '@/store/index'
       required,
-      email,
+
     }
   },
   computed: {
@@ -243,15 +269,33 @@ export default {
     validationForm() {
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
-          this.$router.push('/')
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Chào Lê Thuý An',
-              icon: 'BellIcon',
-              variant: 'success',
-            },
-          })
+          this.busy = true
+          this.$store
+            .dispatch('onLogin', {
+              code: this.userEmail,
+              password: this.password,
+            })
+            .then(res => {
+              this.$router.push('/')
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: `Chào ${res.data.fullName}`,
+                  icon: 'BellIcon',
+                  variant: 'success',
+                },
+              })
+            }).catch(() => {
+              this.busy = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Sai tài khoản hoặc mật khẩu',
+                  icon: 'BellIcon',
+                  variant: 'warning',
+                },
+              })
+            })
         }
       })
     },
@@ -260,5 +304,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@core/scss/vue/pages/page-auth.scss';
+@import "@core/scss/vue/pages/page-auth.scss";
 </style>
