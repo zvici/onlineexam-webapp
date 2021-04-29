@@ -1,76 +1,65 @@
-/* eslint-disable no-unused-vars */
-import Vue from "vue";
-import VueRouter from "vue-router";
-import store from "../store/index";
-Vue.use(VueRouter);
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: () => import("../views/home/index.vue"),
-    meta: {
-      isRedirectIfLoggedIn: true,
-    },
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/about/index.vue"),
-    meta: {
-      isRedirectIfLoggedIn: true,
-    },
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../views/profile/index.vue"),
-    meta: {
-      isRedirectIfLoggedIn: true,
-    },
-  },
-
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/login/index.vue"),
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("../views/signup/index.vue"),
-  },
-  {
-    path: "/password-retrieval/:code",
-    name: "PasswordRetrieval",
-    component: () => import("../views/passwordretrieval/index.vue"),
-  },
-  {
-    path: "/forgot-password",
-    name: "ForgotPassword",
-    component: () => import("../views/forgotpassword/index.vue"),
-  },
-  {
-    path: "*",
-    name: "NotFound",
-    component: () => import("../views/404/index.vue"),
-  },
-];
+Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
-// Check token khi chuyển route
-router.beforeEach((to, _, next) => {
-  const token = localStorage.getItem("token");
-  if (to.meta.isRedirectIfLoggedIn) {
-    if (!token) {
-      store.commit("removeAuthentication");
-      return next({ name: "Login" });
-    }
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  },
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('@/views/Home.vue'),
+    },
+    {
+      path: '/second-page',
+      name: 'second-page',
+      component: () => import('@/views/SecondPage.vue'),
+      meta: {
+        pageTitle: 'Second Page',
+        breadcrumb: [
+          {
+            text: 'Second Page',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/error-404',
+      name: 'error-404',
+      component: () => import('@/views/error/Error404.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '*',
+      redirect: 'error-404',
+    },
+  ],
+})
+
+// ? For splash screen
+// Remove afterEach hook if you are not using splash screen
+router.afterEach(() => {
+  // Remove initial loading
+  const appLoading = document.getElementById('loading-bg')
+  if (appLoading) {
+    appLoading.style.display = 'none'
   }
-  return next();
-});
-export default router;
+})
+
+export default router

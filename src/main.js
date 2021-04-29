@@ -1,22 +1,36 @@
-import Vue from "vue";
-import App from "./App.vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import "./registerServiceWorker";
-import router from "./router";
-import store from "./store";
-import VueSimpleAlert from "vue-simple-alert";
+import Vue from 'vue'
+import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
+import VueCompositionAPI from '@vue/composition-api'
 
-import "./assets/css/global.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+import router from './router'
+import store from './store'
+import App from './App.vue'
 
-Vue.use(VueSimpleAlert, { reverseButtons: true });
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
-Vue.config.productionTip = false;
+// Global Components
+import './global-components'
+
+// 3rd party plugins
+import '@/libs/portal-vue'
+import '@/libs/toastification'
+import './registerServiceWorker'
+
+// BSV Plugin Registration
+Vue.use(ToastPlugin)
+Vue.use(ModalPlugin)
+
+// Composition API
+Vue.use(VueCompositionAPI)
+
+// import core styles
+require('@core/scss/core.scss')
+
+// import assets styles
+require('@/assets/scss/style.scss')
+
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
-}).$mount("#app");
+  render: h => h(App),
+}).$mount('#app')
