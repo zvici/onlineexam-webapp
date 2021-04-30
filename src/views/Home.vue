@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card title="Ngôn ngữ lập trình 🚀">
+    <b-card title="TOEIC 🚀">
       <b-card-text>9:00 - 10:00</b-card-text>
       <b-card-text><b-link
         href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
@@ -10,7 +10,7 @@
       </b-link></b-card-text>
     </b-card>
 
-    <b-card title="Bảo mật thông tin? 🔒">
+    <b-card title="IELTS 🔒">
       <b-card-text>08:00 - 10:00</b-card-text>
       <b-card-text>30/04/2021</b-card-text>
     </b-card>
