@@ -20,6 +20,15 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/exam',
+      name: 'Exam',
+      component: () => import('@/views/exam/index.vue'),
+      meta: {
+        isRedirectIfLoggedIn: true,
+        layout: 'full',
+      },
+    },
+    {
       path: '/second-page',
       name: 'second-page',
       component: () => import('@/views/SecondPage.vue'),

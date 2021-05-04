@@ -4,3 +4,17 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.main-test {
+  .card {
+    .col-form-label {
+      padding-top: 1.2rem !important;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+    .custom-control-label {
+      color: black;
+      font-weight: 400;
+      font-size: 1.1rem;
+    }
+  }
+}

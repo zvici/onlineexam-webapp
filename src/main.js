@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
+import VueSweetalert2 from 'vue-sweetalert2'
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 import router from './router'
 import store from './store'
@@ -20,6 +24,8 @@ Vue.use(ModalPlugin)
 
 // Composition API
 Vue.use(VueCompositionAPI)
+
+Vue.use(VueSweetalert2)
 
 // import core styles
 require('@core/scss/core.scss')
