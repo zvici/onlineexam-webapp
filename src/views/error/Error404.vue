@@ -2,19 +2,19 @@
   <!-- Error page-->
   <div class="misc-wrapper">
     <b-link class="brand-logo">
-      <vuexy-logo />
+      <!-- <vuexy-logo /> -->
       <h2 class="brand-text text-primary ml-1">
-        Vuexy
+        Online Exam
       </h2>
     </b-link>
 
     <div class="misc-inner p-2 p-sm-3">
       <div class="w-100 text-center">
         <h2 class="mb-1">
-          Page Not Found 🕵🏻‍♀️
+          Trang không tồn tại 🕵🏻‍♀️
         </h2>
         <p class="mb-2">
-          Oops! 😖 The requested URL was not found on this server.
+          Trong thế giới Internet rộng lớn, xin đừng để lạc mất nhau 🥺
         </p>
 
         <b-button
@@ -40,12 +40,12 @@
 <script>
 /* eslint-disable global-require */
 import { BLink, BButton, BImg } from 'bootstrap-vue'
-import VuexyLogo from '@core/layouts/components/Logo.vue'
+// import VuexyLogo from '@core/layouts/components/Logo.vue'
 import store from '@/store/index'
 
 export default {
   components: {
-    VuexyLogo,
+    // VuexyLogo,
     BLink,
     BButton,
     BImg,

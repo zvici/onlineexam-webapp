@@ -1,10 +1,12 @@
 <template>
   <div
     class="card-test-schedule"
-    @click="toExam"
+    @click="toExam(dataSchedule._id)"
   >
-    <b-card title="TOEIC 🚀">
-      <b-card-text>9:00 - 10:00</b-card-text>
+    <b-card :title="dataSchedule.name">
+      <b-card-text>{{
+        `${dataSchedule.timeStart} - ${dataSchedule.timeEnd}`
+      }}</b-card-text>
       <b-card-text><b-link>
         30/04/2021
       </b-link></b-card-text>
@@ -20,8 +22,14 @@ export default {
     BCardText,
     BLink,
   },
+  props: {
+    dataSchedule: {
+      type: Object,
+      required: true,
+    },
+  },
   methods: {
-    toExam() {
+    toExam(id) {
       this.$swal({
         title: 'Bạn chắc chắn chứ?',
         text: 'Bắt đầu làm bài thi!',
@@ -36,7 +44,7 @@ export default {
         buttonsStyling: false,
       }).then(result => {
         if (result.value) {
-          this.$router.push('/exam')
+          this.$router.push(`/exam/${id}`)
         }
       })
     },

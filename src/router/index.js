@@ -14,13 +14,13 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/views/home/index.vue'),
       meta: {
         isRedirectIfLoggedIn: true,
       },
     },
     {
-      path: '/exam',
+      path: '/exam/:id',
       name: 'Exam',
       component: () => import('@/views/exam/index.vue'),
       meta: {
@@ -46,7 +46,7 @@ const router = new VueRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/Login.vue'),
+      component: () => import('@/views/auth/login/index.vue'),
       meta: {
         layout: 'full',
         isRedirectIfLoggedIn: false,

@@ -7,10 +7,10 @@
           to="/"
         >
           <span class="brand-logo">
-            <b-img
+            <!-- <b-img
               :src="appLogoImage"
               alt="logo"
-            />
+            /> -->
           </span>
           <h2 class="brand-text mb-0">
             {{ appName }}
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { BLink, BImg } from 'bootstrap-vue'
+import { BLink } from 'bootstrap-vue'
 import { $themeConfig } from '@themeConfig'
 
 export default {
   components: {
     BLink,
-    BImg,
+    // BImg,
   },
   setup() {
     // App Name
