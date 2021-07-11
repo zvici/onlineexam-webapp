@@ -22,7 +22,7 @@
           class="mb-2 btn-sm-block"
           :to="{path:'/'}"
         >
-          Back to home
+          Quay lại trang chủ
         </b-button>
 
         <!-- image -->

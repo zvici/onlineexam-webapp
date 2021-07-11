@@ -1,87 +1,98 @@
 <template>
   <div>
-    <b-card>
-      <h4 class="font-weight-bold">
-        Bài thi TOEIC
-      </h4>
-    </b-card>
-    <b-container
-      fluid="sm"
-      class="d-flex"
-    >
-      <div class="main-test">
-        <b-card>
-          <swiper
-            ref="questionSwiper"
-            :options="swiperOptions"
-          >
-            <swiper-slide
-              v-for="(question, indexQ) in listQuestions"
-              :key="question.id"
+    <div v-show="false">
+      <b-card>
+        <h4 class="font-weight-bold">
+          Bài thi TOEIC
+        </h4>
+      </b-card>
+      <b-container
+        fluid="sm"
+        class="d-flex"
+      >
+        <div class="main-test">
+          <b-card>
+            <swiper
+              ref="questionSwiper"
+              :options="swiperOptions"
             >
-              <b-form-group
-                :label="`Câu ${indexQ + 1}: ${question.title}`"
-                class="mt-2"
-                label-size="lg"
+              <swiper-slide
+                v-for="(question, indexQ) in listQuestions"
+                :key="question.id"
               >
-                <b-form-radio-group
+                <b-form-group
+                  :label="`Câu ${indexQ + 1}: ${question.title}`"
+                  class="mt-2"
                   label-size="lg"
-                  stacked
                 >
-                  <b-form-radio
-                    v-for="(item, indexR) in question.response"
-                    :key="indexR"
-                    :value="indexR"
-                    name="radio-size"
-                    size="lg"
-                    class="mt-2 text-dark"
-                    @change="changQuestion(indexQ, indexR)"
-                  >{{ (indexR + 1) | numberToString }}.
-                    {{ item }}</b-form-radio>
-                </b-form-radio-group>
-              </b-form-group>
-            </swiper-slide>
-            <div
-              slot="pagination"
-              class="swiper-pagination"
-            />
-            <!-- Add Arrows -->
-          </swiper>
-          <div class="d-flex mt-3">
+                  <b-form-radio-group
+                    label-size="lg"
+                    stacked
+                  >
+                    <b-form-radio
+                      v-for="(item, indexR) in question.response"
+                      :key="indexR"
+                      :value="indexR"
+                      name="radio-size"
+                      size="lg"
+                      class="mt-2 text-dark"
+                      @change="changQuestion(indexQ, indexR)"
+                    >{{ (indexR + 1) | numberToString }}.
+                      {{ item }}</b-form-radio>
+                  </b-form-radio-group>
+                </b-form-group>
+              </swiper-slide>
+              <div
+                slot="pagination"
+                class="swiper-pagination"
+              />
+              <!-- Add Arrows -->
+            </swiper>
+            <div class="d-flex mt-3">
+              <b-button
+                slot="button-prev"
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                class="prev"
+                variant="outline-primary"
+              >
+                Câu trước
+              </b-button>
+              <b-button
+                slot="button-next"
+                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                class="next ml-1"
+                variant="outline-primary"
+              >
+                Câu tiếp
+              </b-button>
+            </div>
+          </b-card>
+        </div>
+        <div class="number-question pl-1">
+          <b-card>
             <b-button
-              slot="button-prev"
+              v-for="(item, indexB) in listAnswer"
+              :key="indexB"
               v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-              class="prev"
-              variant="outline-primary"
+              :variant="item.answer === null ? 'outline-primary' : 'primary'"
+              class="col-2 m-1"
+              @click.prevent="toSlide(indexB)"
             >
-              Câu trước
+              {{ (indexB + 1) | digitnumber }}
             </b-button>
-            <b-button
-              slot="button-next"
-              v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-              class="next ml-1"
-              variant="outline-primary"
-            >
-              Câu tiếp
-            </b-button>
-          </div>
-        </b-card>
-      </div>
-      <div class="number-question pl-1">
-        <b-card>
-          <b-button
-            v-for="(item, indexB) in listAnswer"
-            :key="indexB"
-            v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-            :variant="item.answer === null ? 'outline-primary' : 'primary'"
-            class="col-2 m-1"
-            @click.prevent="toSlide(indexB)"
-          >
-            {{ (indexB + 1) | digitnumber }}
-          </b-button>
-        </b-card>
-      </div>
-    </b-container>
+          </b-card>
+        </div>
+      </b-container>
+    </div>
+    <b-modal
+      ref="my-modal"
+      centered
+      title="Thông tin và điều lệ"
+      ok-only
+      ok-title="Chấp nhận"
+    >
+      <h1>hihi</h1>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -92,6 +103,7 @@ import {
   BFormGroup,
   BContainer,
   BButton,
+  BModal,
 } from 'bootstrap-vue'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
@@ -107,6 +119,7 @@ export default {
     Swiper,
     SwiperSlide,
     BButton,
+    BModal,
   },
   directives: {
     Ripple,
@@ -307,6 +320,9 @@ export default {
         },
       },
     }
+  },
+  mounted() {
+    this.$refs['my-modal'].show()
   },
   created() {
     this.listQuestions.forEach(element => {
