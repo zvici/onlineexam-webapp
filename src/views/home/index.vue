@@ -28,7 +28,8 @@ export default {
       )
       this.listSchedule = response.data
     } catch (error) {
-      console.log(error)
+      // eslint-disable-next-line no-alert
+      alert(error)
     }
   },
 }
