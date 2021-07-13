@@ -3,8 +3,12 @@
     :show="show"
     rounded="sm"
     spinner-variant="primary"
+    class="overlay-page"
   >
-    <div class="exam-page">
+    <div
+      v-if="currentQuestion"
+      class="exam-page"
+    >
       <div class="main">
         <!-- Start: Title -->
         <div class="title">
@@ -13,18 +17,17 @@
         <!-- Start: Body -->
         <div class="body">
           <b-form-group
-            v-if="currentQuestion"
-            v-slot="{ ariaDescribedby }"
-            :label="currentQuestion.title"
+            :label="`Câu ${selectedQuestion + 1}: ${currentQuestion.title}`"
           >
             <b-form-radio-group
-              id="radio-group-1"
-              :options="currentQuestion.answers"
-              text-field="answer"
-              value-field="_id"
-              :aria-describedby="ariaDescribedby"
+              id="radio-group-question"
+              v-model="currentQuestion.answer"
+              :options="currentQuestion.questions"
+              text-field="text"
+              value-field="id"
               name="radio-options"
               stacked
+              @change="onChangeAnswer"
             />
           </b-form-group>
         </div>
@@ -94,27 +97,30 @@
           <div class="count">
             <div class="item">
               <div class="num">
-                00
-              </div>
-              <div>house</div>
-            </div>
-            <div class="item">
-              <div class="num">
                 42
               </div>
-              <div>minutes</div>
+              <div>phút</div>
             </div>
             <div class="item">
               <div class="num">
                 39
               </div>
-              <div>second</div>
+              <div>giây</div>
             </div>
           </div>
         </div>
         <div class="verbal">
           <div class="title">
             <p>Bảng câu hỏi</p>
+          </div>
+          <div class="verbal-area">
+            <square-question
+              v-for="item in listAnswer.answers"
+              :key="item.id"
+              :num="item.num"
+              :status="item.status"
+              :selectq="selectedQuestion"
+            />
           </div>
         </div>
       </div>
@@ -128,6 +134,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import MaskSub from '@/components/Mask/MaskSub.vue'
 import schedulesApi from '@/api/schedulesApi'
+import SquareQuestion from '@/components/SquareQuestion/SquareQuestion.vue'
 
 export default {
   components: {
@@ -136,6 +143,7 @@ export default {
     BFormGroup,
     BFormRadioGroup,
     BOverlay,
+    SquareQuestion,
   },
   directives: {
     Ripple,
@@ -143,16 +151,19 @@ export default {
   data() {
     return {
       show: true,
-      listQuestions: {},
       nameExam: '',
       totalQuestion: 0,
       selectedQuestion: 0,
+      listAnswer: {
+        id: this.$route.params.id,
+        answers: [],
+      },
     }
   },
   computed: {
     currentQuestion() {
-      if (this.listQuestions) {
-        return this.listQuestions[this.selectedQuestion]
+      if (this.listAnswer) {
+        return this.listAnswer.answers[this.selectedQuestion]
       }
       return null
     },
@@ -170,9 +181,22 @@ export default {
       const response = await schedulesApi.getSchedulesById(
         this.$route.params.id,
       )
-      this.listQuestions = response.data.data.exam.questions
       this.totalQuestion = response.data.data.exam.questions.length
       this.nameExam = response.data.data.exam.name
+      response.data.data.exam.questions.forEach((element, index) => this.listAnswer.answers.push({
+        num: index + 1,
+        // eslint-disable-next-line no-underscore-dangle
+        id: element._id,
+        status: 2,
+        answer: null,
+        questions: element.answers.map((item, idx) => ({
+          text: item.answer,
+          value: idx + 1,
+          // eslint-disable-next-line no-underscore-dangle
+          id: `${index}&&&${idx + 1}`,
+        })),
+        title: element.title,
+      }))
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert(err)
@@ -181,6 +205,14 @@ export default {
     }
   },
   methods: {
+    onChangeAnswer(value) {
+      // eslint-disable-next-line radix
+      const nuQ = parseInt(value.split('&&&')[0])
+      this.listAnswer.answers[nuQ].status = 1
+    },
+    changeSlectedQuestion(num) {
+      this.selectedQuestion = num
+    },
     onNextQuestion() {
       this.selectedQuestion += 1
     },
@@ -213,8 +245,10 @@ export default {
       }
     }
     .body {
+      flex: 1;
       padding: 40px;
       padding-top: 80px;
+      padding-bottom: 120px;
       font-size: 20px;
       .custom-control-label {
         font-size: 15px;
@@ -308,7 +342,16 @@ export default {
           margin: 0;
         }
       }
+      .verbal-area {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      }
     }
   }
+}
+.overlay-page {
+  width: 100%;
+  height: 100vh;
 }
 </style>
