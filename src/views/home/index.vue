@@ -41,7 +41,6 @@ export default {
         // eslint-disable-next-line no-underscore-dangle
         this.userData._id,
       )
-      console.log(response.data)
       this.listSchedule = response.data
     } catch (error) {
       // eslint-disable-next-line no-alert

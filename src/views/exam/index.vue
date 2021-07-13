@@ -174,7 +174,8 @@ export default {
       this.totalQuestion = response.data.data.exam.questions.length
       this.nameExam = response.data.data.exam.name
     } catch (err) {
-      console.log(err)
+      // eslint-disable-next-line no-alert
+      alert(err)
     } finally {
       this.show = false
     }
