@@ -1,0 +1,42 @@
+<template>
+  <div class="main">
+    <div
+      class="mask"
+      :style="{ backgroundColor: `${color}` }"
+    />
+    <div class="label">
+      {{ title }}
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    color: {
+      type: String,
+      default: 'white',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+  },
+}
+</script>
+<style lang="scss" scoped>
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .mask {
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+  }
+  .label {
+    margin-left: 20px;
+    color: black;
+    font-weight: 500;
+  }
+}
+</style>
