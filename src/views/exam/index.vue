@@ -99,13 +99,13 @@
           <div class="count">
             <div class="item">
               <div class="num">
-                42
+                {{ timeLeft.minutes }}
               </div>
               <div>phút</div>
             </div>
             <div class="item">
               <div class="num">
-                39
+                {{ timeLeft.seconds }}
               </div>
               <div>giây</div>
             </div>
@@ -161,6 +161,10 @@ export default {
         id: this.$route.params.id,
         answers: [],
       },
+      timeLeft: {
+        minutes: 0,
+        seconds: 0,
+      },
     }
   },
   computed: {
@@ -200,6 +204,7 @@ export default {
         })),
         title: element.title,
       }))
+      this.startTimeLeft(response.data.data.time)
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert(err)
@@ -208,6 +213,24 @@ export default {
     }
   },
   methods: {
+    startTimeLeft(num) {
+      const diff = num
+      this.timeLeft.minutes = diff
+      this.timeLeft.seconds = 0
+      const a = setInterval(() => {
+        if (this.timeLeft.seconds === 0) {
+          this.timeLeft.minutes -= 1
+          this.timeLeft.seconds = 59
+        } else {
+          this.timeLeft.seconds -= 1
+        }
+        if (this.timeLeft.minutes === 0 && this.timeLeft.seconds === 0) {
+          clearInterval(a)
+          // eslint-disable-next-line no-alert
+          alert('Hết thời gian')
+        }
+      }, 1000)
+    },
     onChangeAnswer(value) {
       // eslint-disable-next-line radix
       const nuQ = parseInt(value.split('&&&')[0])
@@ -225,8 +248,7 @@ export default {
     onMaskReview() {
       this.listAnswer.answers[this.selectedQuestion].status = 3
     },
-    onSubmitAnswer() {
-    },
+    onSubmitAnswer() {},
   },
 }
 </script>
