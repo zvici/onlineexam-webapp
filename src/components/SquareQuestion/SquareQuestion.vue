@@ -3,6 +3,7 @@
     <div
       class="square"
       :style="{ backgroundColor: `${color}`, borderColor: `${borderColor}` }"
+      @click="onChange"
     >
       <p>{{ num }}</p>
     </div>
@@ -46,6 +47,11 @@ export default {
         return '#0468BF'
       }
       return 'white'
+    },
+  },
+  methods: {
+    onChange() {
+      this.$emit('changeQuestion', this.num)
     },
   },
 }

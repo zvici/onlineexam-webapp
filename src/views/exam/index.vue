@@ -39,6 +39,7 @@
                 <b-button
                   v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                   variant="dark"
+                  @click="onMaskReview"
                 >
                   Đánh dấu xem lại
                 </b-button>
@@ -64,6 +65,7 @@
               <b-button
                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                 variant="primary"
+                @click="onSubmitAnswer"
               >
                 Nộp bài
               </b-button>
@@ -120,6 +122,7 @@
               :num="item.num"
               :status="item.status"
               :selectq="selectedQuestion"
+              @changeQuestion="changeSlectedQuestion"
             />
           </div>
         </div>
@@ -211,13 +214,18 @@ export default {
       this.listAnswer.answers[nuQ].status = 1
     },
     changeSlectedQuestion(num) {
-      this.selectedQuestion = num
+      this.selectedQuestion = num - 1
     },
     onNextQuestion() {
       this.selectedQuestion += 1
     },
     onPreviousQuestion() {
       this.selectedQuestion -= 1
+    },
+    onMaskReview() {
+      this.listAnswer.answers[this.selectedQuestion].status = 3
+    },
+    onSubmitAnswer() {
     },
   },
 }
