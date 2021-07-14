@@ -39,6 +39,7 @@
                 <b-button
                   v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                   variant="dark"
+                  class="review"
                   @click="onMaskReview"
                 >
                   Đánh dấu xem lại
@@ -299,6 +300,9 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .review {
+          display: inline;
+        }
         .previous {
           border-radius: 20px 0px 0px 20px;
           margin-left: 10px;
@@ -383,5 +387,23 @@ export default {
 .overlay-page {
   width: 100%;
   height: 100vh;
+}
+@media screen and (max-width: 800px) {
+  .exam-page {
+    .main {
+      width: 100% !important;
+      .footer-exam {
+        .review {
+          display: none !important;
+        }
+        .sub {
+          display: none;
+        }
+      }
+    }
+    .control {
+      display: none;
+    }
+  }
 }
 </style>

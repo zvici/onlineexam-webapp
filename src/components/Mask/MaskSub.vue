@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main-sub">
     <div
       class="mask"
       :style="{ backgroundColor: `${color}` }"
@@ -24,7 +24,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.main {
+.main-sub {
   display: flex;
   align-items: center;
   justify-content: center;
