@@ -107,10 +107,10 @@ export default {
       .name {
         color: #364975;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 16px;
       }
       .time {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 500;
         display: flex;
         align-items: center;
