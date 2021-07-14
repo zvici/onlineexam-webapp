@@ -1,6 +1,7 @@
 <template>
   <div class="main-square">
     <div
+      v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       class="square"
       :style="{ backgroundColor: `${color}`, borderColor: `${borderColor}` }"
       @click="onChange"
@@ -10,7 +11,12 @@
   </div>
 </template>
 <script>
+import Ripple from 'vue-ripple-directive'
+
 export default {
+  directives: {
+    Ripple,
+  },
   props: {
     num: {
       type: Number,
