@@ -129,16 +129,48 @@
         </div>
       </div>
     </div>
+    <b-modal
+      ref="my-modal"
+      hide-footer
+      title="Thông báo"
+      centered
+    >
+      <div class="d-block text-center p-5">
+        <h3>Nộp bài</h3>
+      </div>
+      <div class="d-flex justify-content-end">
+        <b-button
+          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+          variant="primary"
+          @click="onSentAnswer"
+        >
+          Nộp bài
+        </b-button>
+        <b-button
+          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+          variant="danger"
+          class="ml-1"
+          @click="hideModal"
+        >
+          Đóng
+        </b-button>
+      </div>
+    </b-modal>
   </b-overlay>
 </template>
 <script>
 import {
-  BButton, BFormGroup, BFormRadioGroup, BOverlay,
+  BButton,
+  BFormGroup,
+  BFormRadioGroup,
+  BOverlay,
+  BModal,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import MaskSub from '@/components/Mask/MaskSub.vue'
 import schedulesApi from '@/api/schedulesApi'
 import SquareQuestion from '@/components/SquareQuestion/SquareQuestion.vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -148,6 +180,7 @@ export default {
     BFormRadioGroup,
     BOverlay,
     SquareQuestion,
+    BModal,
   },
   directives: {
     Ripple,
@@ -209,6 +242,7 @@ export default {
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert(err)
+      this.$router.push({ name: 'error-404' })
     } finally {
       this.show = false
     }
@@ -219,6 +253,17 @@ export default {
       this.timeLeft.minutes = diff
       this.timeLeft.seconds = 0
       const a = setInterval(() => {
+        if (this.timeLeft.minutes === 5 && this.timeLeft.seconds === 0) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Thông báo',
+              icon: 'BellIcon',
+              text: 'Bạn còn 5 phút làm bài',
+              variant: 'warning',
+            },
+          })
+        }
         if (this.timeLeft.seconds === 0) {
           this.timeLeft.minutes -= 1
           this.timeLeft.seconds = 59
@@ -227,8 +272,7 @@ export default {
         }
         if (this.timeLeft.minutes === 0 && this.timeLeft.seconds === 0) {
           clearInterval(a)
-          // eslint-disable-next-line no-alert
-          alert('Hết thời gian')
+          this.onSentAnswer()
         }
       }, 1000)
     },
@@ -249,7 +293,26 @@ export default {
     onMaskReview() {
       this.listAnswer.answers[this.selectedQuestion].status = 3
     },
-    onSubmitAnswer() {},
+    hideModal() {
+      this.$refs['my-modal'].hide()
+    },
+    onSubmitAnswer() {
+      this.$refs['my-modal'].show()
+    },
+    onSentAnswer() {
+      this.$swal({
+        title: 'Nộp bài thành công!',
+        text: 'Bạn có thể kiếm tra kết quả của mình ở phần kết quả thi!',
+        icon: 'success',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+        buttonsStyling: false,
+      }).then(() => {
+        this.$router.push({ name: 'Home' })
+        this.$router.go()
+      })
+    },
   },
 }
 </script>
