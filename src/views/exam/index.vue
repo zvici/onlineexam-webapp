@@ -135,26 +135,32 @@
       title="Thông báo"
       centered
     >
-      <div class="d-block text-center p-5">
-        <h3>Nộp bài</h3>
-      </div>
-      <div class="d-flex justify-content-end">
-        <b-button
-          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-          variant="primary"
-          @click="onSentAnswer"
-        >
-          Nộp bài
-        </b-button>
-        <b-button
-          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-          variant="danger"
-          class="ml-1"
-          @click="hideModal"
-        >
-          Đóng
-        </b-button>
-      </div>
+      <b-overlay
+        :show="show"
+        rounded="sm"
+        spinner-variant="primary"
+      >
+        <div class="d-block text-center p-5">
+          <h3>Bạn muốn nộp bài chứ?</h3>
+        </div>
+        <div class="d-flex justify-content-end">
+          <b-button
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            variant="primary"
+            @click="onSentAnswer"
+          >
+            Nộp bài
+          </b-button>
+          <b-button
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            variant="danger"
+            class="ml-1"
+            @click="hideModal"
+          >
+            Đóng
+          </b-button>
+        </div>
+      </b-overlay>
     </b-modal>
   </b-overlay>
 </template>
@@ -171,6 +177,8 @@ import MaskSub from '@/components/Mask/MaskSub.vue'
 import schedulesApi from '@/api/schedulesApi'
 import SquareQuestion from '@/components/SquareQuestion/SquareQuestion.vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { mapGetters } from 'vuex'
+import resultApi from '@/api/resultApi'
 
 export default {
   components: {
@@ -216,6 +224,9 @@ export default {
       if (this.selectedQuestion === 0) return true
       return false
     },
+    ...mapGetters([
+      'userData',
+    ]),
   },
   async created() {
     try {
@@ -299,19 +310,45 @@ export default {
     onSubmitAnswer() {
       this.$refs['my-modal'].show()
     },
-    onSentAnswer() {
-      this.$swal({
-        title: 'Nộp bài thành công!',
-        text: 'Bạn có thể kiếm tra kết quả của mình ở phần kết quả thi!',
-        icon: 'success',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-        buttonsStyling: false,
-      }).then(() => {
-        this.$router.push({ name: 'Home' })
-        this.$router.go()
-      })
+    async onSentAnswer() {
+      const dataSend = {
+        // eslint-disable-next-line no-underscore-dangle
+        userID: this.userData._id,
+        scheduleId: this.listAnswer.id,
+        answers: this.listAnswer.answers.map(element => ({
+          id: element.id,
+          // eslint-disable-next-line radix
+          answer: element.answer ? parseInt(element.answer.split('&&&')[1]) : null,
+        })),
+      }
+      this.show = true
+      try {
+        await resultApi.addResult(dataSend)
+        this.$swal({
+          title: 'Nộp bài thành công!',
+          text: 'Bạn có thể kiếm tra kết quả của mình ở phần kết quả thi!',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+          buttonsStyling: false,
+        }).then(() => {
+          this.$router.push({ name: 'Home' })
+          this.$router.go()
+        })
+      } catch (err) {
+        this.$swal({
+          title: 'Lỗi!',
+          text: 'Bạn có thể thử lại bằng cách nhấn nút nộp bài!',
+          icon: 'error',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+          buttonsStyling: false,
+        })
+      } finally {
+        this.show = false
+      }
     },
   },
 }

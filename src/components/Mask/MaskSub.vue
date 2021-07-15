@@ -10,12 +10,7 @@
   </div>
 </template>
 <script>
-import Ripple from 'vue-ripple-directive'
-
 export default {
-  directives: {
-    Ripple,
-  },
   props: {
     color: {
       type: String,
