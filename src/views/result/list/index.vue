@@ -45,7 +45,8 @@ export default {
       const response = await resultApi.getResultByUser(this.userData._id)
       this.items = response.data.data
     } catch (err) {
-      console.log(err)
+      // eslint-disable-next-line no-undef
+      arlet(err)
     }
   },
 
