@@ -20,6 +20,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/result',
+      name: 'ListResult',
+      component: () => import('@/views/result/list/index.vue'),
+      meta: {
+        isRedirectIfLoggedIn: true,
+      },
+    },
+    {
       path: '/exam/:id',
       name: 'Exam',
       component: () => import('@/views/exam/index.vue'),

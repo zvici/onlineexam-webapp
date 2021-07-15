@@ -4,14 +4,14 @@ export default [
     route: 'home',
     icon: 'HomeIcon',
   },
-  {
-    title: 'Lịch Thi',
-    route: 'second-page',
-    icon: 'CalendarIcon',
-  },
+  // {
+  //   title: 'Lịch Thi',
+  //   route: 'second-page',
+  //   icon: 'CalendarIcon',
+  // },
   {
     title: 'Kết quả thi',
-    route: '',
+    route: 'ListResult',
     icon: 'CalendarIcon',
   },
 ]
