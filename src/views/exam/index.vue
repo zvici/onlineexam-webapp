@@ -207,6 +207,8 @@ export default {
         minutes: 0,
         seconds: 0,
       },
+      countTime: null,
+      statusSubmit: false,
     }
   },
   computed: {
@@ -227,6 +229,31 @@ export default {
     ...mapGetters([
       'userData',
     ]),
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.statusSubmit === false) {
+      this.$swal({
+        title: 'Bạn muốn thoát?',
+        text: 'Điều này có thế ảnh hưởng tới kết quả bài thì!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Đóng cửa sổ',
+        customClass: {
+          confirmButton: 'btn btn-outline-danger',
+          cancelButton: 'btn btn-primary ml-1',
+        },
+        buttonsStyling: false,
+      }).then(result => {
+        if (result.value) {
+          next()
+        } else {
+          next(false)
+        }
+      })
+    } else {
+      next()
+    }
   },
   async created() {
     try {
@@ -258,12 +285,15 @@ export default {
       this.show = false
     }
   },
+  beforeDestroy() {
+    clearInterval(this.countTime)
+  },
   methods: {
     startTimeLeft(num) {
       const diff = num
       this.timeLeft.minutes = diff
       this.timeLeft.seconds = 0
-      const a = setInterval(() => {
+      this.countTime = setInterval(() => {
         if (this.timeLeft.minutes === 5 && this.timeLeft.seconds === 0) {
           this.$toast({
             component: ToastificationContent,
@@ -282,7 +312,7 @@ export default {
           this.timeLeft.seconds -= 1
         }
         if (this.timeLeft.minutes === 0 && this.timeLeft.seconds === 0) {
-          clearInterval(a)
+          clearInterval(this.countTime)
           this.onSentAnswer()
         }
       }, 1000)
@@ -311,6 +341,7 @@ export default {
       this.$refs['my-modal'].show()
     },
     async onSentAnswer() {
+      this.statusSubmit = true
       const dataSend = {
         // eslint-disable-next-line no-underscore-dangle
         userID: this.userData._id,
@@ -333,8 +364,7 @@ export default {
           },
           buttonsStyling: false,
         }).then(() => {
-          this.$router.push({ name: 'Home' })
-          this.$router.go()
+          this.$router.push({ name: 'home' })
         })
       } catch (err) {
         this.$swal({
