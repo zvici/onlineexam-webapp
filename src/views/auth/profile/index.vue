@@ -97,7 +97,7 @@ export default {
   margin-top: -21px;
   margin-left: -21px;
   margin-right: -21px;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 6px 6px 0px 0px;
 }
 .avatar-profile {
   text-align: center;
