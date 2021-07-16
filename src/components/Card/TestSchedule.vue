@@ -89,7 +89,7 @@ export default {
 .card-test-schedule {
   cursor: pointer;
   .card-body {
-    background-image: linear-gradient(135deg, #f0fffe 10%, #e3fffc 100%);
+    // background-image: linear-gradient(135deg, #f0fffe 10%, #e3fffc 100%);
     display: flex;
     padding: 5px;
     border-radius: 7px;
@@ -105,7 +105,7 @@ export default {
       justify-content: space-between;
       padding: 10px 20px;
       .name {
-        color: #364975;
+        // color: #364975;
         font-weight: bold;
         font-size: 16px;
       }
