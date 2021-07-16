@@ -45,7 +45,7 @@ export default {
         { key: 'index', label: 'Số thứ tự' },
         { key: 'schedule.name', label: 'Tên lịch thi' },
         { key: 'schedule.time', label: 'Thời gian làm bài (phút)' },
-        { key: 'score', label: 'Kết quả' },
+        { key: 'score', label: 'Kết quả (điểm)' },
       ],
       items: [],
       isBusy: true,
