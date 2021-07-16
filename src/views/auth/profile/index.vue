@@ -39,7 +39,7 @@
           md="6"
         ><div class="item">
           <feather-icon
-            icon="ZapIcon"
+            icon="CalendarIcon"
             size="20"
           />
           <p>{{ userData.birthday }}</p>
@@ -50,7 +50,7 @@
           md="6"
         ><div class="item">
           <feather-icon
-            icon="CalendarIcon"
+            icon="ZapIcon"
             size="20"
           />
           <p>{{ userData.gender | filterGender }}</p>
