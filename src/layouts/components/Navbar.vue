@@ -31,37 +31,41 @@
             <p class="user-name font-weight-bolder mb-0">
               {{ userData ? userData.fullName : '' }}
             </p>
-            <span class="user-status"> {{ userData ? userData.code: '' }}</span>
+            <span class="user-status">
+              {{ userData ? userData.code : '' }}</span>
           </div>
           <b-avatar
             size="40"
             variant="light-primary"
             badge
-            :src="require('@/assets/images/avatars/13-small.png')"
+            :src="url+userData.avatar"
             class="badge-minimal"
             badge-variant="success"
           />
         </template>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <b-dropdown-item
+          link-class="d-flex align-items-center"
+          to="/profile"
+        >
           <feather-icon
             size="16"
             icon="UserIcon"
             class="mr-50"
           />
-          <span>Thông tin thí sinh</span>
-        </b-dropdown-item>
-
-        <!-- <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MailIcon"
-            class="mr-50"
-          />
-          <span>Inbox</span>
+          <span>Thông tin</span>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
+          <feather-icon
+            size="16"
+            icon="SettingsIcon"
+            class="mr-50"
+          />
+          <span>Cài đặt</span>
+        </b-dropdown-item>
+
+        <!-- <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
             size="16"
             icon="CheckSquareIcon"
@@ -125,6 +129,11 @@ export default {
       type: Function,
       default: () => {},
     },
+  },
+  data() {
+    return {
+      url: 'https://examol.herokuapp.com',
+    }
   },
   computed: {
     userData() {

@@ -28,6 +28,14 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('@/views/auth/profile/index.vue'),
+      meta: {
+        isRedirectIfLoggedIn: true,
+      },
+    },
+    {
       path: '/exam/:id',
       name: 'Exam',
       component: () => import('@/views/exam/index.vue'),
