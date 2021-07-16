@@ -49,10 +49,10 @@
             icon="UserIcon"
             class="mr-50"
           />
-          <span>Profile</span>
+          <span>Thông tin thí sinh</span>
         </b-dropdown-item>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <!-- <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
             size="16"
             icon="MailIcon"
@@ -77,7 +77,7 @@
             class="mr-50"
           />
           <span>Chat</span>
-        </b-dropdown-item>
+        </b-dropdown-item> -->
 
         <b-dropdown-divider />
 
@@ -90,7 +90,7 @@
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <span>Đăng xuất</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
