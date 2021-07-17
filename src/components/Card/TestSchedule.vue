@@ -4,6 +4,12 @@
     @click="toExam(dataSchedule._id)"
   >
     <b-card class="card-body">
+      <div
+        v-if="!compareTime"
+        class="overlay-test"
+      >
+        <p>Không khả dụng</p>
+      </div>
       <div class="line" />
       <div class="main">
         <p class="name">
@@ -62,37 +68,67 @@ export default {
       required: true,
     },
   },
+  computed: {
+    compareTime() {
+      const today = new Date()
+      const dateEnd = new Date(this.dataSchedule.timeEnd)
+      const dateStart = new Date(this.dataSchedule.timeStart)
+      if (dateEnd < today || dateStart > today) return false
+      return true
+    },
+  },
   methods: {
     toExam(id) {
-      this.$swal({
-        title: 'Bạn chắc chắn chứ?',
-        text: 'Bắt đầu làm bài thi!',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Bắt đầu!',
-        cancelButtonText: 'Trở về',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-          cancelButton: 'btn btn-outline-danger ml-1',
-        },
-        buttonsStyling: false,
-      }).then(result => {
-        if (result.value) {
-          this.$router.push(`/exam/${id}`)
-        }
-      })
+      if (this.compareTime === true) {
+        this.$swal({
+          title: 'Bạn chắc chắn chứ?',
+          text: 'Bắt đầu làm bài thi!',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Bắt đầu!',
+          cancelButtonText: 'Trở về',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-danger ml-1',
+          },
+          buttonsStyling: false,
+        }).then(result => {
+          if (result.value) {
+            this.$router.push(`/exam/${id}`)
+          }
+        })
+      }
     },
   },
 }
 </script>
 <style lang="scss" scoped>
 .card-test-schedule {
+  position: relative;
   cursor: pointer;
   .card-body {
     // background-image: linear-gradient(135deg, #f0fffe 10%, #e3fffc 100%);
     display: flex;
     padding: 5px;
     border-radius: 7px;
+    .overlay-test{
+      position: absolute;
+      background-color: rgba(128, 128, 128, 0.131);
+      width: 100%;
+      height: 100%;
+      margin-top: -10px;
+      margin-left: -10px;
+      display: flex;
+      border-radius: 7px;
+      justify-content: flex-end;
+      padding-top: 8px;
+      padding-right: 8px;
+      p{
+        color: red;
+        font-weight: bold;
+        transform: rotate(20deg);
+      }
+    }
     .line {
       width: 10px;
       height: 120px;
