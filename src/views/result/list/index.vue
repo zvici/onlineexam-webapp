@@ -1,6 +1,27 @@
 <template>
-  <div>
+  <div class="result-page">
     <b-card title="Kết quả thi">
+      <div class="info">
+        <tr>
+          <th>Tên thí sinh:</th>
+          <th class="pl-1">
+            {{ userData.fullName }}
+          </th>
+        </tr>
+        <tr>
+          <th>Ngày sinh:</th>
+          <th class="pl-1">
+            {{ userData.birthday }}
+          </th>
+        </tr>
+        <tr>
+          <th>Giới tính:</th>
+          <th class="pl-1">
+            {{ userData.gender === true ? 'Nam' : 'Nữ' }}
+          </th>
+        </tr>
+      </div>
+
       <b-table
         :fields="fields"
         :items="items"
@@ -24,6 +45,16 @@
           </div>
         </template>
       </b-table>
+      <download-excel
+        v-if="items.length > 0"
+        class="btn btn-success float-right"
+        :data="items"
+        :fields="json_fields"
+        :header="`Kết quả thi của thí sinh ${userData.fullName}`"
+        :name="`${userData.code}.xls`"
+      >
+        Xuất file Excel
+      </download-excel>
     </b-card>
   </div>
 </template>
@@ -53,6 +84,11 @@ export default {
         text: 'Hiện chưa có kết quả nào',
         status: 'text-primary',
       },
+      json_fields: {
+        'Tên lịch thi': 'schedule.name',
+        'Thời gian làm bài (Phút)': 'schedule.time',
+        Điểm: 'score',
+      },
     }
   },
   computed: {
@@ -74,3 +110,13 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.result-page {
+  .info {
+    th {
+      padding-top: 10px;
+    }
+    padding-bottom: 10px;
+  }
+}
+</style>

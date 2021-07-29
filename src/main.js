@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 import VueSweetalert2 from 'vue-sweetalert2'
-
+import JsonExcel from 'vue-json-excel'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'sweetalert2/dist/sweetalert2.min.css'
 
@@ -27,6 +27,7 @@ Vue.use(VueCompositionAPI)
 
 Vue.use(VueSweetalert2)
 
+Vue.component('downloadExcel', JsonExcel)
 // import core styles
 require('@core/scss/core.scss')
 

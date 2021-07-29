@@ -117,13 +117,13 @@
 
               <!-- checkbox -->
               <b-form-group>
-                <b-form-checkbox
+                <!-- <b-form-checkbox
                   id="remember-me"
                   v-model="status"
                   name="checkbox-1"
                 >
                   Lưu trình duyệt
-                </b-form-checkbox>
+                </b-form-checkbox> -->
               </b-form-group>
 
               <!-- submit buttons -->
@@ -204,7 +204,6 @@ import {
   BFormInput,
   BInputGroupAppend,
   BInputGroup,
-  BFormCheckbox,
   BCardText,
   BCardTitle,
   BImg,
@@ -226,7 +225,6 @@ export default {
     BFormInput,
     BInputGroupAppend,
     BInputGroup,
-    BFormCheckbox,
     BCardText,
     BCardTitle,
     BImg,
