@@ -7,7 +7,7 @@
         href="https://1.envato.market/pixinvent_portfolio"
         target="_blank"
       >Pixinvent</b-link> -->
-      <span class="d-none d-sm-inline-block">Online Exam</span>
+      <span class="d-none d-sm-inline-block">Online Exam, All rights Reserved</span>
     </span>
     <!--
     <span
