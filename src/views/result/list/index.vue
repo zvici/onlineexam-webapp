@@ -11,7 +11,7 @@
         <tr>
           <th>Ngày sinh:</th>
           <th class="pl-1">
-            {{ userData.birthday }}
+            {{ birthday }}
           </th>
         </tr>
         <tr>
@@ -63,6 +63,7 @@
 import { BTable, BCard, BSpinner } from 'bootstrap-vue'
 import resultApi from '@/api/resultApi'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: {
@@ -93,6 +94,9 @@ export default {
   },
   computed: {
     ...mapGetters(['userData']),
+    birthday() {
+      return moment(this.userData.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')
+    },
   },
   async created() {
     try {

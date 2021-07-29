@@ -42,7 +42,7 @@
             icon="CalendarIcon"
             size="20"
           />
-          <p>{{ userData.birthday }}</p>
+          <p>{{ birthday }}</p>
         </div>
         </b-col>
         <b-col
@@ -65,6 +65,7 @@ import {
   BCard, BAvatar, BRow, BCol,
 } from 'bootstrap-vue'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: {
@@ -85,6 +86,9 @@ export default {
   },
   computed: {
     ...mapGetters(['userData']),
+    birthday() {
+      return moment(this.userData.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')
+    },
   },
 }
 </script>
