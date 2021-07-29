@@ -113,10 +113,11 @@ export default {
 <style lang="scss" scoped>
 .result-page {
   .info {
+    margin-top: -12px;
     th {
       padding-top: 10px;
     }
-    padding-bottom: 10px;
+    padding-bottom: 20px;
   }
 }
 </style>
