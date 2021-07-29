@@ -76,6 +76,7 @@ export default {
       fields: [
         { key: 'index', label: 'Số thứ tự' },
         { key: 'schedule.name', label: 'Tên lịch thi' },
+        { key: 'schedule.timeStart', label: 'Ngày thi', formatter: 'dateTime' },
         { key: 'schedule.time', label: 'Thời gian làm bài (phút)' },
         { key: 'score', label: 'Kết quả (điểm)' },
       ],
@@ -87,6 +88,9 @@ export default {
       },
       json_fields: {
         'Tên lịch thi': 'schedule.name',
+        'Ngày thi': {
+          callback: value => `${moment(value.schedule.timeStart).format('DD/MM/YYYY HH:mm')}`,
+        },
         'Thời gian làm bài (Phút)': 'schedule.time',
         Điểm: 'score',
       },
@@ -111,6 +115,11 @@ export default {
     } finally {
       this.isBusy = false
     }
+  },
+  methods: {
+    dateTime(value) {
+      return `${moment(value).format('DD/MM/YYYY  -  HH:mm')}`
+    },
   },
 }
 </script>
