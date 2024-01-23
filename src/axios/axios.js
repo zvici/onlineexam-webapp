@@ -2,7 +2,7 @@ import axios from 'axios'
 // // eslint-disable-next-line import/no-cycle
 // import store from '../store'
 
-axios.defaults.baseURL = 'https://examol.herokuapp.com/api'
+axios.defaults.baseURL = 'https://onlineexam-backend-production.up.railway.app/api'
 axios.defaults.headers.get.Accept = 'application/json'
 axios.defaults.headers.post.Accept = 'application/json'
 axios.defaults.headers.put.Accept = 'application/json'
